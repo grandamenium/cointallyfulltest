@@ -7,11 +7,12 @@ This PR configures the CoinTally repository for seamless deployment to Netlify, 
 ## Changes Made
 
 ### 1. Netlify Configuration (`netlify.toml`)
-- **Build Settings**: Configured base directory, build command, and publish directory
+- **✨ CRITICAL**: Added `@netlify/plugin-nextjs` for Next.js 14 App Router support
+- **Build Settings**: Configured base directory (`Frontend`), build command, and publish directory (`.next`)
 - **Environment Variables**: Set Node.js version to 18 and disabled Next.js telemetry
-- **Redirect Rules**: Added proper redirects for Next.js App Router compatibility
 - **Security Headers**: Implemented security headers (X-Frame-Options, X-Content-Type-Options, etc.)
 - **Caching**: Optimized cache headers for static assets and Next.js files
+- **Removed**: Incorrect SPA-style redirects (handled by Next.js plugin)
 
 ### 2. Next.js Routing Support (`Frontend/public/_redirects`)
 - Created redirect file to ensure client-side routing works correctly
@@ -30,7 +31,11 @@ This PR configures the CoinTally repository for seamless deployment to Netlify, 
 - Maintained Web3 webpack configuration
 - Removed invalid telemetry configuration
 
-### 5. Build Scripts (`Frontend/package.json`)
+### 5. Build Dependencies & Scripts (`Frontend/package.json`)
+- **✨ CRITICAL**: Moved build-time dependencies to `dependencies`:
+  - TypeScript, Tailwind CSS, PostCSS, Autoprefixer
+  - Sharp (for Next.js image optimization)
+  - Tailwind-animate
 - Added `build:test` script to run linting and build together
 - Added `build:clean` script to remove .next directory
 - Added `netlify:build` script optimized for Netlify deployment
@@ -39,11 +44,16 @@ This PR configures the CoinTally repository for seamless deployment to Netlify, 
 - Added fallback fonts for Google Fonts (DM Sans and Inter)
 - Ensures graceful degradation if fonts fail to load
 
-### 7. Deployment Documentation (`NETLIFY_DEPLOY.md`)
+### 7. Node Version Configuration (`.nvmrc`)
+- Set Node.js version to 18 for consistent builds
+- Ensures Netlify uses the correct Node version
+
+### 8. Deployment Documentation (`NETLIFY_DEPLOY.md`)
 - Comprehensive guide for deploying to Netlify
 - Instructions for GitHub integration and CLI deployment
 - Troubleshooting section for common issues
 - Expected behavior documentation (what works/doesn't work without backend)
+- Updated with correct build configuration details
 
 ## How to Deploy to Netlify
 
@@ -96,13 +106,15 @@ See `NETLIFY_DEPLOY.md` for detailed instructions and troubleshooting.
 ## Files Changed
 
 ```
-netlify.toml (new)                    - Main Netlify configuration
+netlify.toml (new)                    - Main Netlify configuration with Next.js plugin
+.nvmrc (new)                          - Node.js version specification
 NETLIFY_DEPLOY.md (new)               - Deployment guide
 Frontend/.env.production (new)        - Production environment variables
-Frontend/public/_redirects (new)      - Client-side routing redirects
+Frontend/public/_redirects (new)      - Fallback for API routes
 Frontend/next.config.js (modified)    - Next.js optimizations
-Frontend/package.json (modified)      - Build test scripts
+Frontend/package.json (modified)      - Build dependencies moved, scripts added
 Frontend/app/layout.tsx (modified)    - Font fallback improvements
+PR_DESCRIPTION.md (new)               - This file
 ```
 
 ## Deployment Checklist

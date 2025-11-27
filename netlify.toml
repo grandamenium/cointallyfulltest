@@ -1,21 +1,18 @@
+# Netlify Next.js Plugin - Essential for Next.js 14 App Router support
+[[plugins]]
+  package = "@netlify/plugin-nextjs"
+
 [build]
   # Build command for the frontend
   base = "Frontend"
   command = "npm run build"
-  publish = "Frontend/.next"
+  publish = ".next"
 
 [build.environment]
   # Node version for build
   NODE_VERSION = "18"
   # Next.js specific settings
   NEXT_TELEMETRY_DISABLED = "1"
-
-# Redirect rules for Next.js app router
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  force = false
 
 # Security headers
 [[headers]]
