@@ -1,0 +1,82 @@
+CoinTally Frontend - Console Log Capture
+========================================
+Date: October 29, 2025 15:13:33
+Test Session: Comprehensive UI Audit
+
+CONSOLE ERRORS AND WARNINGS
+============================
+
+1. MISSING FAVICON (All Pages)
+-------------------------------
+[ERROR] Failed to load resource: the server responded with a status of 404 (Not Found)
+@ http://localhost:3000/favicon.ico:0
+
+Severity: MEDIUM
+Impact: Unprofessional appearance, unnecessary 404 requests
+Recommendation: Add favicon.ico to /public directory
+
+
+2. HYDRATION ERROR (Transactions Page)
+--------------------------------------
+[ERROR] Warning: In HTML, %s cannot be a descendant of <%s>.
+This will cause a hydration error.%s <div> p 
+    at div
+    at eval (webpack-internal:///(app-pages-browser)/./node_modules/@radix-ui/react-primitive/dist/index.mjs:38:13)
+    at eval (webpack-internal:///(app-pages-browser)/./node_modules/@radix-ui/react-progress/dist/index.mjs:57:13)
+    at div
+    at eval (webpack-internal:///(app-pages-browser)/./node_modules/@radix-ui/react-primitive/dist/index.mjs:38:13)
+    at Provider (webpack-internal:///(app-pages-browser)/./node_modules/@radix-ui/react-context/dist/index.mjs:34:15)
+    at _c (webpack-internal:///(app-pages-browser)/./node_modules/@radix-ui/react-progress/dist/index.mjs:24:13)
+    at _c (webpack-internal:///(app-pages-browser)/./components/ui/progress.tsx:15:11)
+    at p
+    at eval (webpack-internal:///(app-pages-browser)/./node_modules/@radix-ui/react-primitive/dist/index.mjs:38:13)
+    at eval (webpack-internal:///(app-pages-browser)/./node_modules/@radix-ui/react-dialog/dist/index.mjs:386:13)
+    at _c7 (webpack-internal:///(app-pages-browser)/./components/ui/dialog.tsx:138:11)
+    at div
+    at DialogHeader (webpack-internal:///(app-pages-browser)/./components/ui/dialog.tsx:98:11)
+    at div
+    [... rest of stack trace omitted ...]
+    at CategorizationModal (webpack-internal:///(app-pages-browser)/./components/features/transactions/CategorizationModal.tsx:42:11)
+
+Severity: HIGH (CRITICAL)
+Impact: React hydration errors, potential SSR issues, console warnings
+Recommendation: Change <p> wrapper to <div> in CategorizationModal DialogHeader
+File: components/features/transactions/CategorizationModal.tsx
+
+
+3. AUTOCOMPLETE WARNING (Login Page)
+------------------------------------
+[VERBOSE] [DOM] Input elements should have autocomplete attributes (suggested: "current-password")
+
+Severity: LOW
+Impact: Password managers may not autofill
+Recommendation: Add autocomplete="current-password" to password input
+
+
+INFORMATIONAL LOGS
+==================
+
+React DevTools (All Pages)
+---------------------------
+[INFO] %cDownload the React DevTools for a better development experience: https://reactjs.org/link/react-devtools font-weight:bold
+@ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/compiled/react-dom/cjs/react-dom.development.js:38559
+
+Note: This is expected in development mode and will not appear in production builds.
+
+
+Fast Refresh (Development Hot Reload)
+--------------------------------------
+[LOG] [Fast Refresh] rebuilding @ webpack-internal:///(app-pages-browser)/./node_modules/next/dist/client/components/react-dev-overlay/app/hot-reloader-client.js:186
+[LOG] [Fast Refresh] done in 567ms to 1793ms (various pages)
+
+Note: This is expected in development mode and indicates Next.js hot module replacement is working.
+
+
+SUMMARY
+=======
+Total Errors: 2 (1 critical, 1 medium)
+Total Warnings: 1 (low priority)
+Pages with Errors: 11 (favicon), 1 (hydration), 1 (autocomplete)
+Critical Issues Requiring Immediate Fix: 1 (hydration error)
+
+End of Console Log Capture

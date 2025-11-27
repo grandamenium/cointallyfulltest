@@ -1,0 +1,26 @@
+name: Coinbase
+columns:
+  timestamp: Timestamp
+  type: Transaction Type
+  asset: Asset
+  amount: Quantity Transacted
+  spotPrice: Spot Price at Transaction
+  subtotal: Subtotal
+  total: Total
+  fees: Fees and/or Spread
+  notes: Notes
+mapping:
+  timestamp: timestamp
+  kind:
+    field: type
+    values:
+      Buy: trade
+      Sell: trade
+      Send: withdrawal
+      Receive: deposit
+      Rewards Income: income
+  baseAsset: asset
+  baseAmount: amount
+  quoteAmount: total
+  feeAmount: fees
+  notes: notes

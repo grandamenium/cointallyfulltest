@@ -1,0 +1,81 @@
+[
+  {
+    "id": "connected-1",
+    "userId": "mock-user-id",
+    "sourceId": "ethereum",
+    "sourceName": "Ethereum",
+    "sourceType": "blockchain",
+    "connectionType": "wallet-connect",
+    "label": "My Main Wallet",
+    "address": "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
+    "lastSyncedAt": "2025-10-29T03:26:44.418Z",
+    "status": "connected",
+    "transactionCount": 150,
+    "connectedAt": "2024-01-15T00:00:00.000Z"
+  },
+  {
+    "id": "connected-2",
+    "userId": "mock-user-id",
+    "sourceId": "solana",
+    "sourceName": "Solana",
+    "sourceType": "blockchain",
+    "connectionType": "wallet-connect",
+    "address": "DRpbCBMxVnDK7maPM5tGv6MvB3v1sRMC86PZ8okm21hy",
+    "lastSyncedAt": "2025-10-29T03:11:44.418Z",
+    "status": "connected",
+    "transactionCount": 80,
+    "connectedAt": "2024-02-01T00:00:00.000Z"
+  },
+  {
+    "id": "connected-3",
+    "userId": "mock-user-id",
+    "sourceId": "coinbase",
+    "sourceName": "Coinbase",
+    "sourceType": "exchange",
+    "connectionType": "api-key",
+    "label": "Coinbase Pro",
+    "lastSyncedAt": "2025-10-29T02:41:44.418Z",
+    "status": "connected",
+    "transactionCount": 200,
+    "connectedAt": "2023-11-10T00:00:00.000Z"
+  },
+  {
+    "id": "connected-4",
+    "userId": "mock-user-id",
+    "sourceId": "kraken",
+    "sourceName": "Kraken",
+    "sourceType": "exchange",
+    "connectionType": "api-key",
+    "lastSyncedAt": "2025-10-29T01:41:44.418Z",
+    "status": "connected",
+    "transactionCount": 100,
+    "connectedAt": "2024-03-05T00:00:00.000Z"
+  },
+  {
+    "id": "connected-5",
+    "userId": "mock-user-id",
+    "sourceId": "metamask",
+    "sourceName": "MetaMask",
+    "sourceType": "wallet",
+    "connectionType": "wallet-connect",
+    "address": "0x8a2Bf3c4F5D6E789A01B2C345D67E89F0A1B2C3D",
+    "lastSyncedAt": "2025-10-29T02:56:44.418Z",
+    "status": "connected",
+    "transactionCount": 50,
+    "connectedAt": "2024-01-20T00:00:00.000Z"
+  },
+  {
+    "id": "connected-6",
+    "userId": "mock-user-id",
+    "sourceId": "ledger",
+    "sourceName": "Ledger",
+    "sourceType": "wallet",
+    "connectionType": "wallet-connect",
+    "label": "Hardware Wallet",
+    "address": "0x1A2B3C4D5E6F7890ABCDEF1234567890ABCDEF12",
+    "lastSyncedAt": "2025-10-29T00:41:44.418Z",
+    "status": "connected",
+    "transactionCount": 20,
+    "connectedAt": "2023-12-01T00:00:00.000Z"
+  }
+]

@@ -1,0 +1,150 @@
+[
+  {
+    "id": "ethereum",
+    "name": "Ethereum",
+    "type": "blockchain",
+    "logo": "/logos/ethereum.png",
+    "connectionMethods": [
+      "wallet-connect",
+      "api-key"
+    ]
+  },
+  {
+    "id": "bitcoin",
+    "name": "Bitcoin",
+    "type": "blockchain",
+    "logo": "/logos/bitcoin.png",
+    "connectionMethods": [
+      "api-key",
+      "csv-upload"
+    ]
+  },
+  {
+    "id": "solana",
+    "name": "Solana",
+    "type": "blockchain",
+    "logo": "/logos/solana.png",
+    "connectionMethods": [
+      "wallet-connect",
+      "api-key"
+    ]
+  },
+  {
+    "id": "polygon",
+    "name": "Polygon",
+    "type": "blockchain",
+    "logo": "/logos/polygon.png",
+    "connectionMethods": [
+      "wallet-connect",
+      "csv-upload"
+    ]
+  },
+  {
+    "id": "bsc",
+    "name": "BNB Smart Chain",
+    "type": "blockchain",
+    "logo": "/logos/bnb.png",
+    "connectionMethods": [
+      "wallet-connect",
+      "csv-upload"
+    ]
+  },
+  {
+    "id": "arbitrum",
+    "name": "Arbitrum One",
+    "type": "blockchain",
+    "logo": "/logos/arbitrum.png",
+    "connectionMethods": [
+      "wallet-connect",
+      "csv-upload"
+    ]
+  },
+  {
+    "id": "optimism",
+    "name": "Optimism",
+    "type": "blockchain",
+    "logo": "/logos/optimism.png",
+    "connectionMethods": [
+      "wallet-connect",
+      "csv-upload"
+    ]
+  },
+  {
+    "id": "avalanche",
+    "name": "Avalanche C-Chain",
+    "type": "blockchain",
+    "logo": "/logos/avalanche.png",
+    "connectionMethods": [
+      "wallet-connect",
+      "csv-upload"
+    ]
+  },
+  {
+    "id": "base",
+    "name": "Base",
+    "type": "blockchain",
+    "logo": "/logos/base.png",
+    "connectionMethods": [
+      "wallet-connect",
+      "csv-upload"
+    ]
+  },
+  {
+    "id": "coinbase",
+    "name": "Coinbase",
+    "type": "exchange",
+    "logo": "/logos/coinbase.png",
+    "connectionMethods": [
+      "api-key",
+      "csv-upload"
+    ]
+  },
+  {
+    "id": "binance",
+    "name": "Binance",
+    "type": "exchange",
+    "logo": "/logos/binance.png",
+    "connectionMethods": [
+      "api-key",
+      "csv-upload"
+    ]
+  },
+  {
+    "id": "kraken",
+    "name": "Kraken",
+    "type": "exchange",
+    "logo": "/logos/kraken.png",
+    "connectionMethods": [
+      "api-key",
+      "csv-upload"
+    ]
+  },
+  {
+    "id": "metamask",
+    "name": "MetaMask",
+    "type": "wallet",
+    "logo": "/logos/metamask.png",
+    "connectionMethods": [
+      "wallet-connect"
+    ]
+  },
+  {
+    "id": "ledger",
+    "name": "Ledger",
+    "type": "wallet",
+    "logo": "/logos/ledger.png",
+    "connectionMethods": [
+      "wallet-connect",
+      "api-key"
+    ]
+  },
+  {
+    "id": "phantom",
+    "name": "Phantom",
+    "type": "wallet",
+    "logo": "/logos/phantom.png",
+    "connectionMethods": [
+      "wallet-connect"
+    ]
+  }
+]

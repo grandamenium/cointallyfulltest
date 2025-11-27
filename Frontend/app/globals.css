@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+
+    --primary: 222.2 84% 11%;      /* #0F172A */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 193 100% 54%;     /* #14BEFF */
+    --secondary-foreground: 222.2 84% 11%;
+
+    --accent: 223 93% 63%;         /* #3F6EFF */
+    --accent-foreground: 210 40% 98%;
+
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 11%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;    /* #0F172A - Very dark navy */
+    --foreground: 210 40% 98%;       /* Off-white for text */
+
+    --card: 222.2 47% 11.2%;         /* Slightly lighter than background */
+    --card-foreground: 210 40% 98%;
+
+    --primary: 193 100% 54%;         /* Bright cyan in dark mode */
+    --primary-foreground: 222.2 84% 4.9%;
+
+    --secondary: 217.2 91.2% 59.8%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;      /* Darker muted background */
+    --muted-foreground: 215 20.2% 70%; /* IMPROVED: Lighter muted text for better readability */
+
+    --border: 217.2 32.6% 28%;       /* IMPROVED: More visible borders (increased from 17.5% to 28%) */
+    --input: 217.2 32.6% 25%;        /* IMPROVED: More visible input borders */
+    --ring: 193 100% 54%;
+
+    --accent: 223 93% 70%;           /* IMPROVED: Lighter blue for dark mode (increased from 63% to 70%) */
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 50%;      /* IMPROVED: Brighter red for dark mode (increased from 30.6% to 50%) */
+    --destructive-foreground: 210 40% 98%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body,
+  div,
+  button,
+  a,
+  nav,
+  header,
+  footer,
+  section,
+  aside,
+  main,
+  article,
+  span,
+  p,
+  h1, h2, h3, h4, h5, h6,
+  ul, ol, li {
+    transition-property: color, background-color, border-color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 200ms;
+  }
+
+  input,
+  textarea,
+  select {
+    transition: none;
+  }
+
+  .no-transitions * {
+    transition: none !important;
+  }
+
+  body {
+    @apply bg-background text-foreground font-body;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+
+  /* Accessibility: Focus indicators for keyboard navigation (WCAG 2.1 AA) */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-primary ring-offset-2 ring-offset-background;
+  }
+
+  /* Ensure focus rings work in dark mode */
+  .dark *:focus-visible {
+    @apply ring-offset-background;
+  }
+
+  /* Screen reader only text utility */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  /* Typography improvements - minimum font sizes for readability */
+  .text-xs {
+    font-size: 0.8125rem; /* 13px instead of 12px */
+    line-height: 1.25rem;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

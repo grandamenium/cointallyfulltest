@@ -1,0 +1,16 @@
+[
+  {
+    "id": "mock-user-id",
+    "email": "user@example.com",
+    "name": "John Doe",
+    "createdAt": "2024-01-01T00:00:00.000Z",
+    "onboardingCompleted": true,
+    "taxInfo": {
+      "filingYear": 2024,
+      "state": "California",
+      "filingStatus": "single",
+      "incomeBand": "100k-200k",
+      "priorYearLosses": 5000
+    }
+  }
+]

@@ -1,0 +1,40 @@
+[
+  {
+    "id": "form-2024",
+    "userId": "mock-user-id",
+    "taxYear": 2024,
+    "taxMethod": "FIFO",
+    "status": "completed",
+    "totalGains": 45250.75,
+    "totalLosses": 12350.25,
+    "netGainLoss": 32900.5,
+    "transactionsIncluded": 420,
+    "files": {
+      "form8949": "/forms/form-8949-2024.pdf",
+      "scheduleD": "/forms/schedule-d-2024.pdf",
+      "detailedCsv": "/forms/detailed-2024.csv"
+    },
+    "generatedAt": "2024-10-15T00:00:00.000Z",
+    "emailSentAt": "2024-10-15T00:00:00.000Z",
+    "createdAt": "2024-10-15T00:00:00.000Z"
+  },
+  {
+    "id": "form-2023",
+    "userId": "mock-user-id",
+    "taxYear": 2023,
+    "taxMethod": "FIFO",
+    "status": "completed",
+    "totalGains": 38750.25,
+    "totalLosses": 15420.5,
+    "netGainLoss": 23329.75,
+    "transactionsIncluded": 385,
+    "files": {
+      "form8949": "/forms/form-8949-2023.pdf",
+      "scheduleD": "/forms/schedule-d-2023.pdf",
+      "detailedCsv": "/forms/detailed-2023.csv"
+    },
+    "generatedAt": "2024-04-01T00:00:00.000Z",
+    "emailSentAt": "2024-04-01T00:00:00.000Z",
+    "createdAt": "2024-04-01T00:00:00.000Z"
+  }
+]

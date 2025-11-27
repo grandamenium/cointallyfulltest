@@ -1,0 +1,26 @@
+name: Binance
+columns:
+  timestamp: Date(UTC)
+  pair: Pair
+  type: Type
+  side: Side
+  price: Price
+  filled: Filled
+  total: Total
+  fee: Fee
+mapping:
+  timestamp: timestamp
+  kind:
+    field: type
+    values:
+      LIMIT: trade
+      MARKET: trade
+  baseAsset:
+    extract: pair
+    pattern: "^([A-Z]+)"
+  quoteAsset:
+    extract: pair
+    pattern: "([A-Z]+)$"
+  baseAmount: filled
+  quoteAmount: total
+  feeAmount: fee

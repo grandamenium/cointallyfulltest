@@ -1,0 +1,372 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// User model matching frontend spec
+model User {
+  id                    String    @id @default(uuid())
+  email                 String    @unique
+  passwordHash          String
+  name                  String
+  firstName             String?
+  lastName              String?
+  onboardingCompleted   Boolean   @default(false)
+  emailVerified         Boolean   @default(false)
+  emailVerificationToken String?
+  twoFactorEnabled      Boolean   @default(false)
+  twoFactorSecret       String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  // Tax info as JSON to match frontend structure
+  taxInfo               Json?     // {filingYear, state, filingStatus, incomeBand, priorYearLosses}
+
+  // Relations
+  connectedSources      ConnectedSource[]
+  transactions          Transaction[]
+  taxForms              TaxForm[]
+  auditLogs             AuditLog[]
+  exchangeConnections   ExchangeConnection[]
+  rawTransactions       RawTransaction[]
+  normalizedTransactions NormalizedTransaction[]
+  taxYears              TaxYear[]
+
+  @@map("users")
+}
+
+// Connection sources (seed data for available blockchains/exchanges/wallets)
+model ConnectionSource {
+  id                  String   @id  // e.g., 'ethereum', 'coinbase', 'metamask'
+  name                String         // e.g., 'Ethereum', 'Coinbase'
+  type                String         // 'blockchain' | 'exchange' | 'wallet'
+  logo                String?
+  connectionMethods   Json           // ['wallet-connect', 'api-key', 'csv-upload']
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+
+  // Relations
+  connectedSources    ConnectedSource[]
+
+  @@map("connection_sources")
+}
+
+// Connected sources (user's connected wallets/exchanges)
+model ConnectedSource {
+  id                    String   @id @default(uuid())
+  userId                String
+  sourceId              String
+  sourceName            String
+  sourceType            String   // 'blockchain' | 'exchange' | 'wallet'
+  connectionType        String   // 'wallet-connect' | 'api-key' | 'csv-upload'
+  label                 String?  // User-assigned nickname
+  address               String?  // For blockchain wallets
+  encryptedCredentials  String?  // Encrypted API keys/secrets
+  lastSyncedAt          DateTime?
+  status                String   @default("connected") // 'connected' | 'syncing' | 'error' | 'disconnected'
+  transactionCount      Int      @default(0)
+  connectedAt           DateTime @default(now())
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  // Relations
+  user                  User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  source                ConnectionSource @relation(fields: [sourceId], references: [id])
+  transactions          Transaction[]
+  syncJobs              SyncJob[]
+
+  @@map("connected_sources")
+}
+
+// Transaction model matching frontend spec
+model Transaction {
+  id                String    @id @default(uuid())
+  userId            String
+  sourceId          String    // ConnectedSource ID
+  sourceName        String
+
+  // Core transaction data
+  date              DateTime
+  type              String    // 'buy' | 'sell' | 'transfer-in' | 'transfer-out' | 'self-transfer' | 'expense' | 'gift-received' | 'gift-sent' | 'income' | 'mining' | 'staking' | 'airdrop'
+  asset             String    // Ticker (BTC, ETH, etc.)
+  amount            Decimal   @db.Decimal(30, 15)
+  valueUsd          Decimal?  @db.Decimal(15, 2)
+
+  // Optional fields
+  fee               Decimal?  @db.Decimal(30, 15)
+  feeUsd            Decimal?  @db.Decimal(15, 2)
+  toAddress         String?
+  fromAddress       String?
+  txHash            String?
+
+  // User categorization
+  category          String    @default("uncategorized") // 'uncategorized' | 'personal' | 'business-expense' | 'self-transfer' | 'gift'
+  description       String?   @db.Text
+
+  // Status flags
+  isCategorized     Boolean   @default(false)
+  isPriced          Boolean   @default(false)
+  needsReview       Boolean   @default(false)
+
+  // Metadata
+  rawData           Json?     // Store original transaction data
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  // Relations
+  user              User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  connectedSource   ConnectedSource  @relation(fields: [sourceId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([sourceId])
+  @@index([date])
+  @@index([category])
+  @@index([type])
+  @@map("transactions")
+}
+
+// Tax form model
+model TaxForm {
+  id                    String    @id @default(uuid())
+  userId                String
+  taxYear               Int
+  taxMethod             String    // 'FIFO' | 'LIFO' | 'HIFO' | 'SpecificID'
+  status                String    @default("draft") // 'draft' | 'generating' | 'completed' | 'error'
+
+  // Summary data
+  totalGains            Decimal   @default(0) @db.Decimal(15, 2)
+  totalLosses           Decimal   @default(0) @db.Decimal(15, 2)
+  netGainLoss           Decimal   @default(0) @db.Decimal(15, 2)
+  transactionsIncluded  Int       @default(0)
+
+  // Generated files (URLs or paths)
+  files                 Json?     // {form8949?: string, scheduleD?: string, detailedCsv?: string}
+
+  // Metadata
+  generatedAt           DateTime?
+  emailSentAt           DateTime?
+  errorMessage          String?   @db.Text
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  // Relations
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([taxYear])
+  @@map("tax_forms")
+}
+
+// Sync jobs for async processing
+model SyncJob {
+  id                    String    @id @default(uuid())
+  connectedSourceId     String
+  bullJobId             String?
+  type                  String    // 'wallet-sync' | 'exchange-sync' | 'form-generation'
+  status                String    @default("processing") // 'processing' | 'completed' | 'failed'
+  progress              Int       @default(0)
+  result                Json?
+  errorMessage          String?   @db.Text
+  startedAt             DateTime  @default(now())
+  completedAt           DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  // Relations
+  connectedSource       ConnectedSource @relation(fields: [connectedSourceId], references: [id], onDelete: Cascade)
+
+  @@index([status])
+  @@index([bullJobId])
+  @@map("sync_jobs")
+}
+
+// Price history for assets
+model PriceHistory {
+  id                    String    @id @default(uuid())
+  assetId               String
+  timestamp             DateTime
+  priceUsd              Decimal   @db.Decimal(30, 18)
+  priceEur              Decimal?  @db.Decimal(30, 18)
+  source                String    @default("coingecko")
+  createdAt             DateTime  @default(now())
+
+  asset                 Asset     @relation(fields: [assetId], references: [id], onDelete: Cascade)
+
+  @@unique([assetId, timestamp, source])
+  @@index([assetId])
+  @@index([timestamp])
+  @@map("price_history")
+}
+
+// Audit logs
+model AuditLog {
+  id                    String    @id @default(uuid())
+  userId                String
+  action                String
+  entityType            String
+  entityId              String?
+  changes               Json?
+  ipAddress             String?
+  userAgent             String?
+  createdAt             DateTime  @default(now())
+
+  // Relations
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+// Exchange connections for API credentials
+model ExchangeConnection {
+  id                    String    @id @default(uuid())
+  userId                String
+  exchangeName          String
+  displayName           String
+  encryptedApiKey       String
+  encryptedApiSecret    String
+  encryptedPassphrase   String?
+  additionalConfig      Json?
+  isActive              Boolean   @default(true)
+  lastSyncAt            DateTime?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rawTransactions       RawTransaction[]
+  syncHistories         SyncHistory[]
+
+  @@map("exchange_connections")
+}
+
+// Raw transaction data from exchanges
+model RawTransaction {
+  id                    String    @id @default(uuid())
+  userId                String
+  exchangeConnectionId  String?
+  externalId            String
+  source                String
+  rawData               Json
+  processedAt           DateTime?
+  createdAt             DateTime  @default(now())
+
+  user                  User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exchangeConnection    ExchangeConnection? @relation(fields: [exchangeConnectionId], references: [id], onDelete: Cascade)
+  normalizedTx          NormalizedTransaction?
+
+  @@unique([source, externalId])
+  @@map("raw_transactions")
+}
+
+// Tax year grouping for transactions
+model TaxYear {
+  id                    String    @id @default(uuid())
+  userId                String
+  year                  Int
+  createdAt             DateTime  @default(now())
+
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  normalizedTransactions NormalizedTransaction[]
+
+  @@unique([userId, year])
+  @@map("tax_years")
+}
+
+// Normalized transaction data
+model NormalizedTransaction {
+  id                    String    @id @default(uuid())
+  rawTransactionId      String    @unique
+  taxYearId             String
+  userId                String
+  source                String
+  externalId            String
+  kind                  String
+  baseAsset             String?
+  baseAmount            Decimal?  @db.Decimal(30, 15)
+  quoteAsset            String?
+  quoteAmount           Decimal?  @db.Decimal(30, 15)
+  feeAsset              String?
+  feeAmount             Decimal?  @db.Decimal(30, 15)
+  timestamp             DateTime
+  txHash                String?
+  category              String?
+  isTransfer            Boolean   @default(false)
+  transferMatchId       String?
+  createdAt             DateTime  @default(now())
+
+  user                  User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  rawTransaction        RawTransaction @relation(fields: [rawTransactionId], references: [id], onDelete: Cascade)
+  taxYear               TaxYear       @relation(fields: [taxYearId], references: [id], onDelete: Cascade)
+  transferMatch         TransferMatch? @relation(fields: [transferMatchId], references: [id])
+  withdrawalMatches     TransferMatch[] @relation("WithdrawalMatches")
+  depositMatches        TransferMatch[] @relation("DepositMatches")
+
+  @@map("normalized_transactions")
+}
+
+// Transfer matching for identifying self-transfers
+model TransferMatch {
+  id                    String    @id @default(uuid())
+  withdrawalTxId        String
+  depositTxId           String
+  matchConfidence       Decimal   @db.Decimal(3, 2)
+  matchMethod           String
+  createdAt             DateTime  @default(now())
+
+  withdrawalTx          NormalizedTransaction @relation("WithdrawalMatches", fields: [withdrawalTxId], references: [id], onDelete: Cascade)
+  depositTx             NormalizedTransaction @relation("DepositMatches", fields: [depositTxId], references: [id], onDelete: Cascade)
+  normalizedTransactions NormalizedTransaction[]
+
+  @@map("transfer_matches")
+}
+
+// Sync history tracking
+model SyncHistory {
+  id                    String    @id @default(uuid())
+  exchangeConnectionId  String
+  status                String
+  transactionsImported  Int       @default(0)
+  errorMessage          String?   @db.Text
+  completedAt           DateTime?
+  createdAt             DateTime  @default(now())
+
+  exchangeConnection    ExchangeConnection @relation(fields: [exchangeConnectionId], references: [id], onDelete: Cascade)
+
+  @@map("sync_histories")
+}
+
+// Historical price cache for pricing transactions
+model HistoricalPrice {
+  id                    String    @id @default(uuid())
+  asset                 String
+  date                  DateTime  @db.Date
+  priceUsd              Decimal   @db.Decimal(15, 8)
+  source                String    @default("coingecko")
+  createdAt             DateTime  @default(now())
+
+  @@unique([asset, date])
+  @@index([asset])
+  @@map("historical_prices")
+}
+
+// Asset metadata and coingecko mapping
+model Asset {
+  id                    String    @id @default(uuid())
+  symbol                String    @unique
+  name                  String
+  coingeckoId           String?
+  assetType             String
+  metadata              Json?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  priceHistories        PriceHistory[]
+
+  @@map("assets")
+}

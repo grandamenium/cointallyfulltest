@@ -1,0 +1,360 @@
+{
+  "checkpoint": {
+    "tag": "project-initialization",
+    "timestamp": "2025-10-29T00:13:57Z",
+    "created_by": "project-historian",
+    "description": "Initial project checkpoint - MVP Complete with all core pages and mock data infrastructure"
+  },
+  "git": {
+    "commit_sha": "15ca3ba1e9c58e4c7fe886b515a536635f98b718",
+    "branch": "main",
+    "commit_message": "Initial commit",
+    "commit_date": "2025-10-29T00:09:31Z",
+    "author": "grandamenium <grandamenium@gmail.com>"
+  },
+  "project": {
+    "name": "CoinTally Frontend",
+    "version": "0.1.0",
+    "description": "Professional cryptocurrency tax calculation and reporting platform",
+    "type": "Next.js React TypeScript Application"
+  },
+  "statistics": {
+    "total_files": 94,
+    "source_files": {
+      "typescript": 63,
+      "components": 28,
+      "pages": 14,
+      "api_routes": 3,
+      "hooks": 4,
+      "types": 5,
+      "stores": 1
+    },
+    "lines_of_code": 4973,
+    "mock_data": {
+      "users": 1,
+      "transactions": 600,
+      "connected_sources": 6,
+      "connection_sources": 10,
+      "forms": 2
+    },
+    "dependencies": {
+      "total": 45,
+      "production": 26,
+      "development": 19
+    }
+  },
+  "tech_stack": {
+    "framework": "Next.js 14.2",
+    "runtime": "React 18.3",
+    "language": "TypeScript 5.5",
+    "styling": "Tailwind CSS 3.4",
+    "ui_library": "shadcn/ui (Radix UI)",
+    "state_management": {
+      "remote": "TanStack Query v5",
+      "local": "Zustand 4.5",
+      "forms": "React Hook Form + Zod"
+    },
+    "charts": "Tremor 3.17",
+    "icons": "Lucide React",
+    "date_handling": "date-fns 3.6"
+  },
+  "architecture": {
+    "routing": "Next.js App Router",
+    "rendering": "Server-Side Rendering (SSR)",
+    "data_fetching": "TanStack Query with API routes",
+    "authentication": "Mock (ready for Supabase)",
+    "database": "Mock JSON files (ready for PostgreSQL)",
+    "api_layer": "Next.js API routes with mock data"
+  },
+  "file_structure": {
+    "root_directories": [
+      ".claude",
+      "@mock-database",
+      "DOCS",
+      "app",
+      "assets",
+      "components",
+      "hooks",
+      "lib",
+      "public",
+      "stores",
+      "types"
+    ],
+    "key_files": {
+      "package.json": {
+        "path": "/package.json",
+        "size": "3KB",
+        "checksum": "d96a0f94cf2ba6245e53b43b443df373"
+      },
+      "tsconfig.json": {
+        "path": "/tsconfig.json",
+        "size": "627B",
+        "checksum": "e416d42f09c71fff0fa01c5fde2acdf4"
+      },
+      "tailwind.config.ts": {
+        "path": "/tailwind.config.ts",
+        "size": "3.5KB",
+        "checksum": "1355d0c3684239442a1de8dd6c08b32d"
+      }
+    }
+  },
+  "implemented_features": {
+    "authentication": {
+      "status": "mock",
+      "pages": ["login"],
+      "integration_ready": true,
+      "notes": "useAuth hook returns mock user, ready for Supabase integration"
+    },
+    "onboarding": {
+      "status": "complete",
+      "pages": ["disclaimer", "privacy", "onboarding"],
+      "components": ["OnboardingWizard"],
+      "steps": ["welcome", "tax-year", "state", "filing-status", "income-band", "prior-losses"]
+    },
+    "wallets": {
+      "status": "complete",
+      "pages": ["wallets"],
+      "features": ["connected-sources-display", "status-indicators", "sync-actions", "disconnect"],
+      "notes": "Add wallet modal placeholder present"
+    },
+    "transactions": {
+      "status": "complete",
+      "pages": ["transactions"],
+      "features": ["table-view", "filtering", "search", "categorization", "pagination"],
+      "mock_data": "600 transactions with realistic edge cases"
+    },
+    "dashboard": {
+      "status": "complete",
+      "pages": ["dashboard"],
+      "components": ["MetricsCards", "RatingBadge"],
+      "metrics": ["total-pnl", "capital-gains", "capital-losses", "tax-liability"],
+      "notes": "Portfolio chart placeholder present"
+    },
+    "forms": {
+      "status": "partial",
+      "pages": ["new-form", "view-forms"],
+      "features": ["form-list-display"],
+      "notes": "Form generation wizard not implemented"
+    },
+    "profile": {
+      "status": "complete",
+      "pages": ["profile"],
+      "sections": ["personal-info", "tax-info", "preferences", "danger-zone"]
+    },
+    "support": {
+      "status": "complete",
+      "pages": ["support"],
+      "features": ["faq-accordion", "contact-form", "resource-links"]
+    }
+  },
+  "ui_components": {
+    "shadcn_ui": [
+      "accordion",
+      "alert",
+      "avatar",
+      "badge",
+      "button",
+      "card",
+      "checkbox",
+      "dialog",
+      "dropdown-menu",
+      "input",
+      "label",
+      "progress",
+      "radio-group",
+      "select",
+      "separator",
+      "skeleton",
+      "sonner",
+      "table",
+      "tabs",
+      "textarea",
+      "toast",
+      "toaster"
+    ],
+    "layout_components": ["AppShell", "Header", "Sidebar"],
+    "feature_components": ["MetricsCards", "RatingBadge", "OnboardingWizard"],
+    "total_count": 28
+  },
+  "data_models": {
+    "user": {
+      "file": "/types/user.ts",
+      "fields": ["id", "email", "firstName", "lastName", "taxInfo", "preferences"]
+    },
+    "transaction": {
+      "file": "/types/transaction.ts",
+      "types": ["buy", "sell", "transfer-in", "transfer-out", "self-transfer", "expense", "gift-received", "gift-sent", "income", "mining", "staking", "airdrop"],
+      "categories": ["uncategorized", "personal", "business-expense", "self-transfer", "gift"],
+      "fields": ["id", "userId", "sourceId", "date", "type", "asset", "amount", "valueUsd", "category", "isCategorized", "isPriced", "needsReview"]
+    },
+    "wallet": {
+      "file": "/types/wallet.ts",
+      "source_types": ["blockchain", "exchange", "wallet"],
+      "connection_types": ["wallet-connect", "api-key", "csv-upload"],
+      "statuses": ["connected", "syncing", "error", "disconnected"]
+    },
+    "form": {
+      "file": "/types/form.ts",
+      "tax_methods": ["FIFO", "LIFO", "HIFO", "SpecificID"],
+      "statuses": ["draft", "generating", "completed", "error"],
+      "export_formats": ["pdf", "csv", "turbotax", "taxact"]
+    }
+  },
+  "api_routes": {
+    "implemented": [
+      {
+        "path": "/api/transactions",
+        "method": "GET",
+        "status": "mock",
+        "returns": "Transaction[]"
+      },
+      {
+        "path": "/api/wallets/connected",
+        "method": "GET",
+        "status": "mock",
+        "returns": "ConnectedSource[]"
+      },
+      {
+        "path": "/api/wallets/sources",
+        "method": "GET",
+        "status": "mock",
+        "returns": "ConnectionSource[]"
+      }
+    ],
+    "integration_pattern": "All routes read from @mock-database/*.json files, ready for database replacement"
+  },
+  "design_system": {
+    "colors": {
+      "primary": "#0F172A",
+      "secondary": "#14BEFF",
+      "accent": "#3F6EFF",
+      "success": "#10B981",
+      "warning": "#F59E0B",
+      "error": "#EF4444"
+    },
+    "typography": {
+      "heading": "DM Sans",
+      "body": "Inter",
+      "mono": "Roboto Mono"
+    },
+    "spacing_system": "Tailwind defaults",
+    "border_radius": "4px, 6px, 8px"
+  },
+  "configuration": {
+    "typescript": {
+      "strict_mode": true,
+      "target": "ES2017",
+      "module_resolution": "bundler",
+      "path_aliases": {
+        "@/*": ["./*"]
+      }
+    },
+    "eslint": "Next.js default config",
+    "prettier": "Enabled with Tailwind plugin",
+    "next_config": {
+      "app_router": true,
+      "typescript": true,
+      "eslint": true
+    }
+  },
+  "integration_readiness": {
+    "authentication": {
+      "status": "ready",
+      "search_pattern": "// TODO: AUTH",
+      "integration_point": "hooks/useAuth.ts",
+      "recommended_service": "Supabase"
+    },
+    "database": {
+      "status": "ready",
+      "search_pattern": "// TODO: BACKEND",
+      "integration_points": ["app/api/**/*.ts"],
+      "current_implementation": "JSON file reads",
+      "recommended_service": "PostgreSQL + Prisma"
+    },
+    "external_services": {
+      "status": "not_started",
+      "search_pattern": "// TODO: AGENT",
+      "services_needed": ["price-feed-api", "blockchain-explorer", "tax-calculation-library"]
+    }
+  },
+  "known_issues": [
+    {
+      "id": "KI-001",
+      "severity": "low",
+      "description": "Portfolio performance chart shows placeholder text",
+      "location": "app/(dashboard)/dashboard/page.tsx",
+      "resolution": "Implement Tremor chart with mock data"
+    },
+    {
+      "id": "KI-002",
+      "severity": "medium",
+      "description": "AddWallet modal shows placeholder content",
+      "location": "app/(dashboard)/wallets/page.tsx",
+      "resolution": "Build full connection source selection and credential input flow"
+    },
+    {
+      "id": "KI-003",
+      "severity": "high",
+      "description": "Form generation wizard not implemented",
+      "location": "app/(dashboard)/new-form/page.tsx",
+      "resolution": "Implement 7-step wizard per PRD specifications"
+    },
+    {
+      "id": "KI-004",
+      "severity": "low",
+      "description": "No authentication system",
+      "location": "hooks/useAuth.ts",
+      "resolution": "Integrate Supabase authentication"
+    }
+  ],
+  "next_phase_priorities": [
+    {
+      "priority": 1,
+      "feature": "Form Generation Wizard",
+      "description": "Complete 7-step wizard for generating Form 8949 and Schedule D",
+      "estimated_complexity": "high",
+      "files_affected": ["app/(dashboard)/new-form/page.tsx", "components/features/forms/*"]
+    },
+    {
+      "priority": 2,
+      "feature": "AddWallet Modal",
+      "description": "Build connection source selection and credential input flow",
+      "estimated_complexity": "medium",
+      "files_affected": ["app/(dashboard)/wallets/page.tsx", "components/features/wallets/*"]
+    },
+    {
+      "priority": 3,
+      "feature": "Transaction Categorization Modal",
+      "description": "Implement step-through flow for categorizing transactions",
+      "estimated_complexity": "medium",
+      "files_affected": ["app/(dashboard)/transactions/page.tsx", "components/features/transactions/*"]
+    },
+    {
+      "priority": 4,
+      "feature": "Portfolio Performance Chart",
+      "description": "Replace placeholder with Tremor chart implementation",
+      "estimated_complexity": "low",
+      "files_affected": ["app/(dashboard)/dashboard/page.tsx", "components/features/dashboard/*"]
+    },
+    {
+      "priority": 5,
+      "feature": "Backend Integration",
+      "description": "Replace mock data with real database and API calls",
+      "estimated_complexity": "high",
+      "files_affected": ["app/api/**/*.ts", "hooks/*.ts", "lib/api/*"]
+    }
+  ],
+  "testing": {
+    "unit_tests": "not implemented",
+    "integration_tests": "not implemented",
+    "e2e_tests": "not implemented",
+    "planned_framework": "Jest + React Testing Library + Playwright"
+  },
+  "documentation": {
+    "prd": "/DOCS/PRODUCT-REQUIREMENTS-DOCUMENT.md (2852 lines)",
+    "readme": "/README.md (390 lines)",
+    "agents": "/AGENTS.md",
+    "claude_instructions": "/CLAUDE.md",
+    "checkpoint_narrative": "/docs/checkpoints/CKPT_project-initialization_20251029_001357.md"
+  }
+}
