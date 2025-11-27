@@ -1,8 +1,0 @@
-# Redirects for Next.js App Router on Netlify
-# This ensures client-side routing works properly
-
-# API calls should return 404 if backend is not available
-/api/* 404
-
-# All other routes should be handled by Next.js
-/*    /index.html   200
