@@ -5,6 +5,9 @@
   "scripts": {
     "dev": "npm run check:mocks && next dev",
     "build": "next build",
+    "build:test": "npm run lint && npm run build",
+    "build:clean": "rm -rf .next",
+    "netlify:build": "npm run build",
     "start": "next start",
     "lint": "next lint",
     "generate:mocks": "tsx @mock-database/generate-mock-data.ts",
