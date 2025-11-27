@@ -22,8 +22,9 @@ This guide will help you deploy the CoinTally frontend to Netlify.
    - Netlify should auto-detect the settings from `netlify.toml`, but verify:
      - **Base directory**: `Frontend`
      - **Build command**: `npm run build`
-     - **Publish directory**: `Frontend/.next`
-     - **Node version**: `18`
+     - **Publish directory**: `.next` (relative to base directory)
+     - **Node version**: `18` (from `.nvmrc`)
+     - **Plugin**: `@netlify/plugin-nextjs` (auto-installed)
 
 3. **Environment Variables** (Optional)
    - If you have a backend API, add environment variables:
