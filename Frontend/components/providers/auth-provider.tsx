@@ -24,7 +24,10 @@ const MOCK_USER: User = {
   name: 'Demo User',
   firstName: 'Demo',
   lastName: 'User',
+  emailVerified: true,
+  twoFactorEnabled: false,
   createdAt: new Date('2024-01-01'),
+  updatedAt: new Date('2024-01-01'),
   onboardingCompleted: true,
   taxInfo: {
     filingYear: 2024,
