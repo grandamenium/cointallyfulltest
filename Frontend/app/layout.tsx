@@ -10,6 +10,7 @@ const dmSans = DM_Sans({
   variable: '--font-dm-sans',
   weight: ['400', '500', '600', '700'],
   display: 'swap',
+  fallback: ['system-ui', 'sans-serif'],
 });
 
 const inter = Inter({
@@ -17,6 +18,7 @@ const inter = Inter({
   variable: '--font-inter',
   weight: ['400', '500', '600'],
   display: 'swap',
+  fallback: ['system-ui', 'sans-serif'],
 });
 
 export const metadata: Metadata = {
