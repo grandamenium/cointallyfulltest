@@ -6,7 +6,7 @@
   # Build command for the frontend
   base = "Frontend"
   command = "npm run build"
-  publish = ".next"
+  # Note: publish directory is automatically managed by @netlify/plugin-nextjs
 
 [build.environment]
   # Node version for build
